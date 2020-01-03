@@ -11,19 +11,46 @@ $(".snake-logo").hover(function(e) {
     });
 });
 
-$(".game-container").click(function() {
-    $(document).keypress(function(e) {
-        if (e.which == 119) {
-            direction = "up";
-        } else if (e.which == 115) {
-            direction = "down";
-        } else if (e.which == 97) {
-            direction = "left";
-        } else if (e.which == 100) {
-            direction = "right";
-        }
-    });
+
+$(document).keypress(function(e) {
+    if (e.which == 119) {
+
+        direction = "up";
+    } else if (e.which == 115) {
+        direction = "down";
+    } else if (e.which == 97) {
+        direction = "left";
+    } else if (e.which == 100) {
+        direction = "right";
+    }
+    console.log(e.which + " " + e.metaKey);
 });
+
+$(document).keydown(function(e) {
+    switch (e.which) {
+        case 37 || 97:
+            direction = "left" // left
+            break;
+
+        case 38 || 119: // up
+            direction = "up";
+            break;
+
+        case 39 || 100: // right
+            direction = "right";
+            break;
+
+        case 40 || 115: // down
+            direction = "down";
+            break;
+
+        default:
+            return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+
 
 function moveSnake() {
     if (direction == "right") {
