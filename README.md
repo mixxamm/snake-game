@@ -1,2 +1,3 @@
 # snake-game
-Speelbaar, maar nog niet helemaal af.
+Playable but not finished snake game.
+Use WASD to move.
