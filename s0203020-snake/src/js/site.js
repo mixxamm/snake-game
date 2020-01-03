@@ -46,7 +46,7 @@ function moveSnake() {
     if (ateApple()) {
         spawnApple();
         addToBody(offsetBody);
-        score += 50;
+        score += Math.round(50 * Math.log(snakeBodyParts.length));
         $(".score").html("Score: " + score)
 
     };
