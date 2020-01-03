@@ -1,0 +1,76 @@
+.snake-logo {
+    max-height: 10%;
+    max-width: 30%;
+    min-height: 10%;
+    min-width: 15%;
+    top: 1%;
+    position: fixed;
+}
+
+.snake-title {
+    max-height: 50%;
+    max-width: 30%;
+    min-height: 10%;
+    min-width: 15%;
+    left: 40%;
+    top: 0%;
+    position: fixed;
+}
+
+.game-container {
+    top: 150px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    left: 25%;
+    height: 60%;
+    width: 50%;
+    color: black;
+    background-color: black;
+    position: fixed;
+}
+
+.game-info {
+    height: 80%;
+    width: 40%;
+    background-color: rgb(68, 68, 68);
+    margin-left: 105%;
+    position: relative;
+}
+
+.flipped {
+    transform: scale(-1, 1);
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -khtml-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+}
+
+.nav-custom {
+    position: fixed;
+    max-height: 20%;
+    height: 125px;
+    min-height: 20px;
+    width: 100%;
+    background-color: rgb(46, 44, 44);
+}
+
+.container-snake-body {
+    height: 10px;
+    width: 10px;
+    background-color: greenyellow;
+    visibility: visible;
+    position: relative;
+    left: 250px;
+    right: 250px;
+}
+
+.container-fruit-body {
+    height: 10px;
+    width: 10px;
+    color: red;
+    background-color: red;
+    position: relative;
+    visibility: visible;
+}
