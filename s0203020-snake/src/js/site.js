@@ -1,51 +1,52 @@
-var direction = "right";
-var snakeBodyParts = new Array();
-var id = 0;
-var score = 0;
+let direction = "right";
+const snakeBodyParts = new Array();
+let id = 0;
+let score = 0;
+
 $(".game-container").prepend('<div class="container-snake-body"></div>');
 snakeBodyParts.push($(".container-snake-body"));
-$(".snake-logo").hover(function(e) {
-    $(".snake-logo").animate({ left: "90%" }, 1000, function() {
+$(".snake-logo").hover(function (e) {
+    $(".snake-logo").animate({ left: "90%" }, 1000, function () {
         $(this).addClass("flipped");
-        $(".snake-logo").animate({ left: "0%" }, 1000, function() { $(this).removeClass("flipped"); });
+        $(".snake-logo").animate({ left: "0%" }, 1000, function () { $(this).removeClass("flipped"); });
     });
 });
 
 
-$(document).keypress(function(e) {
-    if ((e.which === 37 || e.which === 97) && direction !== "right")
+$(document).keydown(e => {
+    if (e.code === "ArrowLeft" && direction !== "right")
         direction = "left";
 
-    else if ((e.which === 38 || e.which === 119) && direction !== "down") // up
+    else if (e.code === "ArrowUp" && direction !== "down")
         direction = "up";
 
-    else if ((e.which === 39 || e.which === 100) && direction !== "left") // right
+    else if (e.code === "ArrowRight" && direction !== "left")
         direction = "right";
 
-    else if ((e.which === 40 || e.which === 115) && direction !== "up") // down
+    else if (e.code === "ArrowDown" && direction !== "up")
         direction = "down";
 
 });
 
 
 
-function moveSnake() {
-    if (direction == "right") {
+moveSnake = () => {
+    if (direction === "right") {
         snakeBodyParts[0].css("left", "+=10px");
-    } else if (direction == "left") {
+    } else if (direction === "left") {
         snakeBodyParts[0].css("left", "-=10px");
-    } else if (direction == "up") {
+    } else if (direction === "up") {
         snakeBodyParts[0].css("top", "-=10px");
-    } else if (direction == "down") {
+    } else if (direction === "down") {
         snakeBodyParts[0].css("top", "+=10px");
     }
     var offsetBody = snakeBodyParts[snakeBodyParts.length - 1].offset();
-    if (snakeHitItself() == true) {
-        clearInterval(runGame);
+    if (snakeHitItself()) {
+        clearInterval(gameSpeed);
     }
-    if (ateApple()) {
+    if (appleIsEaten()) {
         spawnApple();
-        addToBody(offsetBody);
+        growSnakeBody(offsetBody);
         score += Math.round(50 * Math.log(snakeBodyParts.length));
         $(".score").html("Score: " + score)
 
@@ -53,23 +54,26 @@ function moveSnake() {
     moveBody();
 }
 
-function snakeHitItself() {
+snakeHitItself = () => {
     for (let i = 1; i < snakeBodyParts.length; i++) {
-        if (snakeBodyParts[0].offset().top == snakeBodyParts[i].offset().top &&
-            snakeBodyParts[0].offset().left == snakeBodyParts[i].offset().left) {
+        if (isHeadHittingBody(snakeBodyParts[i].offset().top, snakeBodyParts[i].offset().left)) {
             return true;
         }
     }
     return false;
 }
 
-function addToBody(position) {
+isHeadHittingBody = (bodyPartTop, bodyPartLeft) => {
+    return snakeBodyParts[0].offset().top === bodyPartTop && snakeBodyParts[0].offset().left === bodyPartLeft;
+}
+
+growSnakeBody = position => {
     $(".container-snake-body").append('<div id="' + id + '" style="left:' + (position.left + 10) + 'px;top:' + (position.top) + 'px;height:10px;width:10px;background-color: greenyellow; position:fixed;"></div>');
     snakeBodyParts.push($("#" + id));
     id++;
 }
 
-function moveBody() {
+moveBody = () => {
     if (snakeBodyParts.length > 1) {
         var x = snakeBodyParts[1].offset();
         snakeBodyParts[1].css("left", snakeBodyParts[0].offset().left);
@@ -84,18 +88,26 @@ function moveBody() {
     }
 }
 
-function spawnApple() {
-    let randL = (Math.random() * 99) + 1;
-    let randT = (Math.random() * 99) + 1;
+spawnApple = () => {
+    let randL = Math.round((Math.random() * 99) + 1);
+    let randT = Math.round((Math.random() * 99) + 1);
     $(".container-fruit-body").css("top", randT + "%");
     $(".container-fruit-body").css("left", randL + "%");
-    console.log("spawned");
 }
 
-function ateApple() {
+appleIsEaten = () => {
     var applePos = $(".container-fruit-body").position();
     var snakeHeadPos = $(".container-snake-body").position();
-    return applePos.top <= snakeHeadPos.top + 10 && applePos.top >= snakeHeadPos.top - 10 && applePos.left <= snakeHeadPos.left + 10 && applePos.left >= snakeHeadPos.left - 10
+    return isSnakeOnTheApple(applePos, snakeHeadPos)
 }
 
-var runGame = setInterval(moveSnake, 30);
+isSnakeOnTheApple = (applePos, snakeHeadPos) => {
+    return applePos.top <= snakeHeadPos.top + 10 && applePos.top >= snakeHeadPos.top - 10 && applePos.left <= snakeHeadPos.left + 10 && applePos.left >= snakeHeadPos.left - 10;
+}
+
+var gameSpeed = setInterval(moveSnake, 30);
+
+// Let user decide the speed. (make a textbox to use this);
+setGameSpeed = (pSpeed) => {
+    gameSpeed = pSpeed;
+}
