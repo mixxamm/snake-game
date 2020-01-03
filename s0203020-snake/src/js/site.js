@@ -12,42 +12,21 @@ $(".snake-logo").hover(function(e) {
 });
 
 
-$(document).keypress(function(e) {
-    if (e.which == 119) {
 
-        direction = "up";
-    } else if (e.which == 115) {
-        direction = "down";
-    } else if (e.which == 97) {
-        direction = "left";
-    } else if (e.which == 100) {
-        direction = "right";
-    }
-    console.log(e.which + " " + e.metaKey);
-});
 
 $(document).keydown(function(e) {
-    switch (e.which) {
-        case 37 || 97:
-            direction = "left" // left
-            break;
+    if ((e.which === 37 || e.which === 97) && direction !== "right")
+        direction = "left";
 
-        case 38 || 119: // up
-            direction = "up";
-            break;
+    else if ((e.which === 38 || e.which === 119) && direction !== "down") // up
+        direction = "up";
 
-        case 39 || 100: // right
-            direction = "right";
-            break;
+    else if ((e.which === 39 || e.which === 100) && direction !== "left") // right
+        direction = "right";
 
-        case 40 || 115: // down
-            direction = "down";
-            break;
+    else if ((e.which === 40 || e.which === 115) && direction !== "up") // down
+        direction = "down";
 
-        default:
-            return; // exit this handler for other keys
-    }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
 
