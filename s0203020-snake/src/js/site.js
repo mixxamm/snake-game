@@ -12,9 +12,7 @@ $(".snake-logo").hover(function(e) {
 });
 
 
-
-
-$(document).keydown(function(e) {
+$(document).keypress(function(e) {
     if ((e.which === 37 || e.which === 97) && direction !== "right")
         direction = "left";
 
